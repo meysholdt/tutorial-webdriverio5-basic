@@ -1,6 +1,7 @@
 'use strict';
 
 const chromedriver = require('chromedriver');
+const proxy = require('selenium-webdriver/proxy');
 const {remote} = require('webdriverio');
 const {
   ClassicRunner,
@@ -22,7 +23,8 @@ describe('wdio5', function () {
   beforeEach(async () => {
     const chrome = {
       capabilities: {
-        browserName: 'chrome'
+        browserName: 'chrome',
+        proxy: proxy.manual({http:"http://ws-fwd-proxy:3129", https: "http://ws-fwd-proxy:3129"})
       }
     };
     browser = await remote(chrome);
@@ -46,6 +48,7 @@ describe('wdio5', function () {
     const runner = new ClassicRunner();
 
     eyes = new Eyes(runner);
+    eyes.setApiKey(process.env.APPLITOOLS_API_KEY);
 
     const configuration = new Configuration();
     configuration.setAppName('Demo App');
