@@ -16,4 +16,5 @@ tasks:
 - init: |
     npm install
   command: |
+    gp open test/example-classic.js
     npm test
